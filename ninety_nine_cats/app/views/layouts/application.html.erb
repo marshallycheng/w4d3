@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NinetyNineCats</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+  <header>
+    <% if logged_in? %>
+    <h2>Hello <%= current_user.username %>!</h2>
+    <form action="<%= session_url %>" method="POST">
+      <input type="hidden" name = "_method" value = "DELETE">
+        <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <input type="submit" value="Log Out">
+    </form>
+
+    <% else %>
+    <a href="<%= new_session_url %>">Login</a>
+    <br>
+    <a href="<%= new_user_url %>">Signup</a>
+    <% end %>
+
+  </header>
+  <body>
+    <ul>
+    <% if flash[:errors]%>
+    <% flash[:errors].each do |error|%>
+    <li>  <%=error%> </li>
+    <% end %>
+    <% end %>
+
+
+
+
+  </ul>
+  <%= yield %>
+  </body>
+</html>
